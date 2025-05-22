@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Management System</title>
+    <link rel="stylesheet" href="project.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏋️ Gym Management System</h1>
+            <div class="current-date" id="currentDate"></div>
+        </header>
+        
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('dashboard')">Dashboard</button>
+            <button class="tab-btn" onclick="openTab('members')">Members</button>
+            <button class="tab-btn" onclick="openTab('checkin')">Check-In/Out</button>
+            <button class="tab-btn" onclick="openTab('attendance')">Attendance</button>
+            <button class="tab-btn" onclick="openTab('payments')">Payments</button>
+            <button class="tab-btn" onclick="openTab('reports')">Reports</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Members</h3>
+                    <p id="totalMembers">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Today</h3>
+                    <p id="activeToday">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Monthly Revenue</h3>
+                    <p id="monthlyRevenue">$0</p>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="chart-container">
+                    <h3>Weekly Attendance</h3>
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Membership Types</h3>
+                    <canvas id="membershipChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <div id="recentActivityLogs" class="list-container"></div>
+            </div>
+        </div>
+
+        <!-- Members Tab -->
+        <div id="members" class="tab-content">
+            <h2>Member Management</h2>
+            <form id="memberForm">
+                <input type="text" id="memberName" placeholder="Full Name" required>
+                <input type="email" id="memberEmail" placeholder="Email">
+                <input type="tel" id="memberPhone" placeholder="Phone Number" required>
+                <select id="memberPlan" required>
+                    <option value="">Select Membership Plan</option>
+                    <option value="basic">Basic ($30/month)</option>
+                    <option value="standard">Standard ($50/month)</option>
+                    <option value="premium">Premium ($80/month)</option>
+                </select>
+                <input type="date" id="memberJoinDate" required>
+                <button type="submit">Add Member</button>
+            </form>
+            <div class="search-bar">
+                <input type="text" id="memberSearch" placeholder="Search members...">
+            </div>
+            <div id="memberList" class="list-container"></div>
+        </div>
+
+        <!-- Check-In Tab -->
+        <div id="checkin" class="tab-content">
+            <h2>Check-In/Out System</h2>
+            <form id="checkinForm">
+                <select id="checkinMember" required>
+                    <option value="">Select Member</option>
+                </select>
+                <div class="button-group">
+                    <button type="submit" name="action" value="checkin">Check-In</button>
+                    <button type="submit" name="action" value="checkout">Check-Out</button>
+                </div>
+            </form>
+            <div class="todays-activity">
+                <h3>Today's Check-Ins</h3>
+                <div id="checkinLogs" class="list-container"></div>
+            </div>
+        </div>
+
+        <!-- Attendance Tab -->
+        <div id="attendance" class="tab-content">
+            <h2>Attendance Records</h2>
+            <div class="filter-controls">
+                <input type="date" id="attendanceDateFilter">
+                <select id="attendanceMemberFilter">
+                    <option value="">All Members</option>
+                </select>
+                <button onclick="filterAttendance()">Filter</button>
+                <button onclick="resetAttendanceFilter()">Reset</button>
+            </div>
+            <div id="attendanceList" class="list-container"></div>
+        </div>
+
+        <!-- Payments Tab -->
+        <div id="payments" class="tab-content">
+            <h2>Payment Management</h2>
+            <form id="paymentForm">
+                <select id="paymentMember" required>
+                    <option value="">Select Member</option>
+                </select>
+                <input type="number" id="paymentAmount" placeholder="Amount" required>
+                <input type="date" id="paymentDate" required>
+                <select id="paymentType" required>
+                    <option value="monthly">Monthly Fee</option>
+                    <option value="personal">Personal Training</option>
+                    <option value="other">Other</option>
+                </select>
+                <button type="submit">Record Payment</button>
+            </form>
+            <div class="filter-controls">
+                <input type="month" id="paymentMonthFilter">
+                <button onclick="filterPayments()">Filter</button>
+            </div>
+            <div id="paymentList" class="list-container"></div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <h2>Reports & Analytics</h2>
+            <div class="report-controls">
+                <select id="reportType">
+                    <option value="monthly">Monthly Attendance</option>
+                    <option value="revenue">Revenue</option>
+                    <option value="membership">Membership Types</option>
+                </select>
+                <input type="month" id="reportMonth">
+                <button onclick="generateReport()">Generate</button>
+            </div>
+            <div class="report-results">
+                <canvas id="reportChart"></canvas>
+                <div id="reportStats"></div>
+            </div>
+            <button class="export-btn" onclick="exportData()">Export Data (CSV)</button>
+        </div>
+    </div>
+    <script src="project.js"></script>
+</body>
+</html>
